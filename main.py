@@ -318,7 +318,8 @@ async def embedr(ctx,url):
   vgid = await video_id(url)
   embed=discord.Embed(title="**Now playing:**", color=0xFF000,url=url)
   embed.add_field(name=ttl, value = f"by {getauth(url)}", inline=False)
-  embed.set_thumbnail(f"https://img.youtube.com/vi/{vgid}/default.jpg")
+  tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
+  embed.set_thumbnail(tmb)
 
   await ctx.send(embed)
 

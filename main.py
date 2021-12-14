@@ -73,6 +73,11 @@ async def getitle(url):
   video = pafy.new(url)
   return video.title
 
+async def getauth(url):    
+  video = pafy.new(url)
+  return video.username
+
+
 
 async def video_id(value):
     query = urllib.parse.urlparse(value)
@@ -312,7 +317,7 @@ async def embedr(ctx,url):
   ttl = await getitle(url)
   vgid = await video_id(url)
   embed=discord.Embed(title="**Now playing:**", color=0xFF000,url=url)
-  embed.add_field(name=ttl, inline=False)
+  embed.add_field(name=ttl, value = f"by {getauthor(url)}", inline=False)
   embed.set_thumbnail(f"https://img.youtube.com/vi/{vgid}/default.jpg")
 
   await ctx.send(embed)

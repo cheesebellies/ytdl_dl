@@ -316,7 +316,7 @@ first two tabs of the group
 async def embedr(ctx,url):
   ttl = await getitle(url)
   vgid = await video_id(url)
-  embed=discord.Embed(title="**Now playing:**", color=0xFF000,url=url)
+  embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
   embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
   tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
   print(tmb)

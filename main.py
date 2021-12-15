@@ -78,20 +78,34 @@ async def getauth(url):
   return video.username
 
 
+#youtu.be/[id]
+#youtube.com/watch?v=[id]
+#youtube.com/v/[id]
+#youtube.com/embed/[id]
 
-async def video_id(value):
-    query = urllib.parse.urlparse(value)
-    if query.hostname == 'youtu.be':
-        return query.path[1:]
-    if query.hostname in ('www.youtube.com', 'youtube.com'):
-        if query.path == '/watch':
-            p = urllib.parse.parse_qs(query.query)
-            return p['v'][0]
-        if query.path[:7] == '/embed/':
-            return query.path.split('/')[2]
-        if query.path[:3] == '/v/':
-            return query.path.split('/')[2]
-    return None
+
+async def get_id_ov(url):
+  
+  strtr = url[11:]
+  strtr2 = ""
+  strtr3 = ""
+
+  for i in list(strtr):
+    if i == "/":
+      break
+    else:
+      strtr2 += i
+
+  strtr3 = strtr[(len(strtr2)):]
+
+  if strtr2 == "youtu.be":
+    return strtr3[:11]
+  elif strtr3[:8] == "watch?v=":
+    return strtr3[7:18]
+  elif strtr3[:2] == "v/":
+    return strtr[1:12]
+  elif strtr3[:6] == "embed/":
+    return strtr3[5:16]
 
 
 @bot.command(name="play",help="Plays the first Youtube result from the input you give. Usage:   -play [search here]   Example:   -play Never Gonna Give You Up",aliases=["p"])
@@ -315,7 +329,7 @@ first two tabs of the group
 @bot.command(name="embed",help="dev tool")
 async def embedr(ctx,url):
   ttl = await getitle(url)
-  vgid = await video_id(url)
+  vgid = await get_id_ov(url)
   embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
   embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
   tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"

@@ -348,7 +348,7 @@ async def embedr(ctx,url):
 
 #play live vidoes... may be too hard... more research needed (into ffmpeg, youtube-dl ; read the docs)
 
-#make the gui look better/give more responses for what its doing
+#make the gui look better/give more responses for what its doing... in progress
 
 
 bot.run(TOKEN) 

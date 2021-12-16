@@ -75,7 +75,7 @@ async def getitle(url):
 
 async def getauth(url):    
   video = pafy.new(url)
-  return video.username
+  return video.author
 
 
 #youtu.be/[id]

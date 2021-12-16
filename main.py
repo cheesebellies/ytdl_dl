@@ -86,7 +86,7 @@ async def getauth(url):
 
 async def get_id_ov(url):
   
-  strtr = url[11:]
+  strtr = url[12:]
   strtr2 = ""
   strtr3 = ""
 
@@ -96,17 +96,17 @@ async def get_id_ov(url):
     else:
       strtr2 += i
 
-  strtr3 = strtr[(len(strtr2)):]
+  strtr3 = strtr[(len(strtr2)+1):]
 
   if strtr2 == "youtu.be":
     return strtr3[:11]
   elif strtr3[:8] == "watch?v=":
-    return strtr3[7:18]
+    return strtr3[8:19]
   elif strtr3[:2] == "v/":
-    return strtr[1:12]
+    return strtr3[2:13]
   elif strtr3[:6] == "embed/":
-    return strtr3[5:16]
-
+    return strtr3[6:17]
+  
 
 @bot.command(name="play",help="Plays the first Youtube result from the input you give. Usage:   -play [search here]   Example:   -play Never Gonna Give You Up",aliases=["p"])
 async def play(ctx,*args):

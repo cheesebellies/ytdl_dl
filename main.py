@@ -18,7 +18,6 @@ from pafys import pafy
 
 list_to_play = []
 paused = False
-prvplymsg = []
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
@@ -56,7 +55,6 @@ async def playa(ctx,url):
 @tasks.loop(seconds=3)
 async def play_the_list():
   global list_to_play
-  global prvplymsg
   
   if paused == False:
     
@@ -70,30 +68,15 @@ async def play_the_list():
           if len(list_to_play) != 0:
             await playa(list_to_play[0][1],list_to_play[0][0])
             del list_to_play[0]
-
-          if len(prvplymsg) == 0: 
             
             ttl = await getitle(url)
-
             vgid = await get_id_ov(url)
             embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
             embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
             tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
             embed.set_thumbnail(url=tmb)
 
-            msg = await ctx.send(embed=embed)
-            prvplymsg = [msg]
-          elif len(prvplymsg) >= 1:
-
-            ttl = await getitle(url)
-
-            vgid = await get_id_ov(url)
-            embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
-            embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
-            tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
-            embed.set_thumbnail(url=tmb)
-
-            await (prvplymsg[0]).edit(embed=embed)
+            await ctx.send(embed=embed)
           
 
 

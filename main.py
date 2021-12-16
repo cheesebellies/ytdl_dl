@@ -18,6 +18,7 @@ from pafys import pafy
 
 list_to_play = []
 paused = False
+prvplymsg = []
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
@@ -55,11 +56,13 @@ async def playa(ctx,url):
 @tasks.loop(seconds=3)
 async def play_the_list():
   global list_to_play
+  global prvplymsg
   
   if paused == False:
     
       if len(list_to_play) != 0:
         ctx = list_to_play[0][1]
+        url = list_to_play[0][0]
 
         voice = get(bot.voice_clients, guild=ctx.guild)
         if voice.is_playing() == False:
@@ -67,6 +70,31 @@ async def play_the_list():
           if len(list_to_play) != 0:
             await playa(list_to_play[0][1],list_to_play[0][0])
             del list_to_play[0]
+
+          if len(prvplymsg) == 0: 
+            
+            ttl = await getitle(url)
+
+            vgid = await get_id_ov(url)
+            embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
+            embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
+            tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
+            embed.set_thumbnail(url=tmb)
+
+            msg = await ctx.send(embed=embed)
+            prvplymsg = [msg]
+          elif len(prvplymsg) >= 1:
+
+            ttl = await getitle(url)
+
+            vgid = await get_id_ov(url)
+            embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
+            embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
+            tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
+            embed.set_thumbnail(url=tmb)
+
+            await (prvplymsg[0]).edit(embed=embed)
+          
 
 
 async def getitle(url):    
@@ -115,7 +143,6 @@ async def play(ctx,*args):
   inpvalid = True
   result = []
   
-  voice_client = get(bot.voice_clients, guild=ctx.guild)
   if len(args) != 0:
     for i in args:
       plyinp += f'{i} '
@@ -324,19 +351,6 @@ async def qnxt(ctx):
 embeds:
 first two tabs of the group
 '''
-
-
-@bot.command(name="embed",help="dev tool")
-async def embedr(ctx,url):
-  ttl = await getitle(url)
-  vgid = await get_id_ov(url)
-  embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
-  embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
-  tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
-  embed.set_thumbnail(url=tmb)
-
-  await ctx.send(embed=embed)
-
 
        
 

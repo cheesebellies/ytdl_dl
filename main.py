@@ -63,7 +63,7 @@ async def play_the_list():
         url = list_to_play[0][0]
 
         voice = get(bot.voice_clients, guild=ctx.guild)
-        if voice.is_playing() == False:
+        if voice.is_playing() == False and len(list_to_play) >= 2:
 
           if len(list_to_play) != 0:
             await playa(list_to_play[0][1],list_to_play[0][0])
@@ -77,6 +77,24 @@ async def play_the_list():
             embed.set_thumbnail(url=tmb)
 
             await ctx.send(embed=embed)
+      
+      elif len(list_to_play) == 1:
+        ctx = list_to_play[0][1]
+        url = list_to_play[0][0]
+
+        if len(list_to_play) != 0:
+            await playa(list_to_play[0][1],list_to_play[0][0])
+            del list_to_play[0]
+            
+            ttl = await getitle(url)
+            vgid = await get_id_ov(url)
+            embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
+            embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
+            tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
+            embed.set_thumbnail(url=tmb)
+
+            await ctx.send(embed=embed)
+
           
 
 
@@ -152,7 +170,6 @@ async def search(ctx,*args):
   sendstr = ""
   sendstrint = 0
   
-  voice_client = get(bot.voice_clients, guild=ctx.guild)
   if len(args) != 0:
     for i in args:
       plyinp += f'{i} '
@@ -305,38 +322,6 @@ async def qnxt(ctx):
   else:
     otp = "Nothing in queue."
   await ctx.send(otp)
-
-
-
-# @bot.command(name="playlist",help="-playlist (add, search, view, remove, delete, play")
-# async def playlistopts(ctx,*args):
-#   global list_to_play
-#   plyinp = ""
-#   inpvalid = True
-#   result = []
-#   sresult = []
-#   sendstr = ""
-#   sendstrint = 0
-
-#   if len(args) != 0:
-#     for i in args:
-#       plyinp += f'{i} '
-#   else:
-#     await ctx.send("Invalid input.")
-#     inpvalid = False
-
-#   if inpvalid == True:
-
-#     if 
-
-
-'''
-embeds:
-first two tabs of the group
-'''
-
-       
-
 
 #Create playlists (maybe from yt playlist, somehow search in playlists?) probably just from -playlist add (name, url).
 

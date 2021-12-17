@@ -71,27 +71,27 @@ async def play_the_list():
             
             if len(prvplymsg) == 0: 
             
-            ttl = await getitle(url)
+              ttl = await getitle(url)
 
-            vgid = await get_id_ov(url)
-            embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
-            embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
-            tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
-            embed.set_thumbnail(url=tmb)
+              vgid = await get_id_ov(url)
+              embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
+              embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
+              tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
+              embed.set_thumbnail(url=tmb)
 
-            msg = await ctx.send(embed=embed)
-            prvplymsg = [msg]
-          else:
+              msg = await ctx.send(embed=embed)
+              prvplymsg = [msg]
+            else:
 
-            ttl = await getitle(url)
+              ttl = await getitle(url)
 
-            vgid = await get_id_ov(url)
-            embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
-            embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
-            tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
-            embed.set_thumbnail(url=tmb)
+              vgid = await get_id_ov(url)
+              embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
+              embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
+              tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
+              embed.set_thumbnail(url=tmb)
 
-            await (prvplymsg[0]).edit(embed=embed)
+              await (prvplymsg[0]).edit(embed=embed)
       
       elif len(list_to_play) == 1:
         ctx = list_to_play[0][1]

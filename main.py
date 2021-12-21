@@ -16,6 +16,7 @@ import json
 import urllib.parse
 from pafys import pafy
 
+prvplymsg = []
 list_to_play = []
 paused = False
 
@@ -55,6 +56,8 @@ async def playa(ctx,url):
 @tasks.loop(seconds=3)
 async def play_the_list():
   global list_to_play
+  global paused
+  global prvplymsg
   
   if paused == False:
     
@@ -65,7 +68,6 @@ async def play_the_list():
         voice = get(bot.voice_clients, guild=ctx.guild)
         if voice.is_playing() == False and len(list_to_play) >= 2:
 
-          if len(list_to_play) != 0:
             await playa(list_to_play[0][1],list_to_play[0][0])
             del list_to_play[0]
             
@@ -92,12 +94,8 @@ async def play_the_list():
               embed.set_thumbnail(url=tmb)
 
               await (prvplymsg[0]).edit(embed=embed)
-      
-      elif len(list_to_play) == 1:
-        ctx = list_to_play[0][1]
-        url = list_to_play[0][0]
 
-        if len(list_to_play) != 0:
+        elif len(list_to_play) == 1:
             await playa(list_to_play[0][1],list_to_play[0][0])
             del list_to_play[0]
             if len(prvplymsg) == 0: 

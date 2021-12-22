@@ -43,6 +43,7 @@ async def change_status():
 #verbose: True
 
 async def playa(ctx,url):
+    await stop(ctx)
     YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':   'True','verbose': 'True'}
     FFMPEG_OPTIONS = {
           'before_options': '-reconnect 1   -reconnect_streamed 1 -reconnect_delay_max 5',  'options': '-vn'}

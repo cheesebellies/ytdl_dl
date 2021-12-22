@@ -9,14 +9,8 @@ from ytsearch import searchr
 from discord.utils import get
 from discord import FFmpegPCMAudio
 from youtube_dl import YoutubeDL
-import youtube_dl
-from bs4 import BeautifulSoup
-import requests
-import json
-import urllib.parse
 from pafys import pafy
 
-prvplymsg = []
 list_to_play = []
 paused = False
 
@@ -60,7 +54,6 @@ async def playa(ctx,url):
 async def play_the_list():
   global list_to_play
   global paused
-  global prvplymsg
   
   try:
 
@@ -76,58 +69,31 @@ async def play_the_list():
               await playa(list_to_play[0][1],list_to_play[0][0])
               del list_to_play[0]
               
-              if len(prvplymsg) == 0: 
-              
-                ttl = await getitle(url)
+              ttl = await getitle(url)
 
-                vgid = await get_id_ov(url)
-                embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
-                embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
-                tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
-                embed.set_thumbnail(url=tmb)
+              vgid = await get_id_ov(url)
+              embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
+              embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
+              tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
+              embed.set_thumbnail(url=tmb)
 
-                msg = await ctx.send(embed=embed)
-                prvplymsg = [msg]
-              else:
-
-                ttl = await getitle(url)
-
-                vgid = await get_id_ov(url)
-                embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
-                embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
-                tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
-                embed.set_thumbnail(url=tmb)
-
-                await (prvplymsg[0]).edit(embed=embed)
+              await ctx.send(embed=embed)
 
           elif len(list_to_play) == 1:
               await playa(list_to_play[0][1],list_to_play[0][0])
               del list_to_play[0]
-              if len(prvplymsg) == 0: 
+              ttl = await getitle(url)
 
-                ttl = await getitle(url)
+              vgid = await get_id_ov(url)
+              embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
+              embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
+              tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
+              embed.set_thumbnail(url=tmb)
 
-                vgid = await get_id_ov(url)
-                embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
-                embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
-                tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
-                embed.set_thumbnail(url=tmb)
+              await ctx.send(embed=embed)
 
-                msg = await ctx.send(embed=embed)
-                prvplymsg = [msg]
-              else:
-
-                ttl = await getitle(url)
-
-                vgid = await get_id_ov(url)
-                embed=discord.Embed(title="**Now playing:**", color=0xFF0000,url=url)
-                embed.add_field(name=ttl, value = f"by {await getauth(url)}", inline=False)
-                tmb = f"https://img.youtube.com/vi/{vgid}/default.jpg"
-                embed.set_thumbnail(url=tmb)
-
-                await (prvplymsg[0]).edit(embed=embed)
-  except Exception as e:
-    print(e)
+  except:
+    pass
 
 
 async def getitle(url):    

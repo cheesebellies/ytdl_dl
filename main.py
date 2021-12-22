@@ -40,8 +40,10 @@ status = cycle(['Music is here!','More features soon!'])
 async def change_status():
   await bot.change_presence(activity=discord.Game(next(status)))
 
+#verbose: True
+
 async def playa(ctx,url):
-    YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':   'True'}
+    YDL_OPTIONS = {'format': 'bestaudio', 'noplaylist':   'True','verbose': 'True'}
     FFMPEG_OPTIONS = {
           'before_options': '-reconnect 1   -reconnect_streamed 1 -reconnect_delay_max 5',  'options': '-vn'}
 

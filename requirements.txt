@@ -1,9 +1,0 @@
-discord.py
-python-dotenv
-discord
-pafy
-youtube-search-python
-youtube-dl==2021.12.17
-pynacl
-bs4
-requests

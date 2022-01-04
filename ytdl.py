@@ -3,6 +3,20 @@ from __future__ import unicode_literals
 from pafys import pafy
 import youtube_dl
 import os
+import sys
+
+
+'''
+
+>python3 ytdl.py download [path to videos folder  eg. /Desktop/videos/] [video url]
+
+   > downloads video from video url to videos folder
+
+>python3 ytdl.py delete [path to videos folder  eg. /Desktop/videos]
+
+   > deletes all videos in videos folder
+
+'''
 
 
 class ytdl:
@@ -37,3 +51,12 @@ class ytdl:
   def deleter(self):
     for filename in os.listdir(self.path_to_videos):
       os.remove(os.path.join(self.path_to_videos,filename))
+
+ytdl1 = ytdl(path_to_videos_folder=sys.argv[2],video_url=sys.argv[3])
+
+
+
+if sys.argv[1] == "download":
+  ytdl1.downloader()
+elif sys.argv[1] == "delete":
+  ytdl1.deleter()
